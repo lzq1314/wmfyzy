@@ -81,5 +81,9 @@
             insert into t_transactionRecords (transaction_name,amount,phoneNumber,memberCardNumber,member_id)
     values (#{transaction_name},#{amount},#{phoneNumber},#{memberCardNumber},#{member_id})
     </insert>
+    
+    <select id="getOneMemberById" resultMap="BaseResultMap">
+        select * from t_member e where e.id = #{id}
+    </select>
 
 </mapper>

@@ -5,6 +5,7 @@ import org.sang.bean.Employee;
 import org.sang.bean.Member;
 import org.sang.bean.Nation;
 import org.sang.bean.PoliticsStatus;
+import org.sang.bean.TransactionRecords;
 
 import java.util.Date;
 import java.util.List;
@@ -25,4 +26,7 @@ public interface MemberMapper {
     int updateMember(@Param("member") Member member);
 
     int addTransactionRecords(TransactionRecords member);
+    
+    Member getOneMemberById(@Param("id") Long id);
+
 }

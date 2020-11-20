@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,8 +81,8 @@ public class MemberBasicController {
 
     @RequestMapping(value = "/addMoney", method = RequestMethod.POST)
     public RespBean addMoney(String id, String amount) {
-        BigDecimal bignum1 = new BigDecimal(amount);
-
+		BigDecimal bignum = new BigDecimal(amount);
+		memberService.addTransactionRecords(id, bignum);
         return RespBean.ok("更新成功!");
     }
 }
