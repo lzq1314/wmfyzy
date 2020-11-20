@@ -18,7 +18,7 @@ import java.util.List;
  * Created by sang on 2018/1/12.
  */
 @Service
-@Transactional
+//@Transactional
 public class EmpService {
     @Autowired
     EmpMapper empMapper;
@@ -102,4 +102,5 @@ public class EmpService {
         int start = (page - 1) * size;
         return empMapper.getEmployeeByPageShort(start,size);
     }
+
 }

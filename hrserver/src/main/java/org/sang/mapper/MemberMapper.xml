@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.MemberMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Member">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sex" property="sex"/>
+        <result column="createDate" property="createDate"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="telPhoneNumber" property="telPhoneNumber"/>
+        <result column="idCardNumber" property="idCardNumber"/>
+        <result column="memberCardNumber" property="memberCardNumber"/>
+        <result column="balance" property="balance"/>
+        <result column="memberStatus" property="memberStatus"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+
+    <insert id="addMember" parameterType="org.sang.bean.Member">
+            insert into t_member (name,sex,phoneNumber,telPhoneNumber,idCardNumber,memberCardNumber,memberStatus,remark)
+    values (#{name},#{sex},#{phoneNumber},#{telPhoneNumber},#{idCardNumber},#{memberCardNumber},#{memberStatus},#{remark})
+    </insert>
+
+    <select id="getMemberByPage" resultMap="BaseResultMap">
+        select * from t_member e where e.name LIKE concat('%',#{keywords},'%')
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND e.phoneNumber = #{phoneNumber}
+        </if>
+        <if test="startBeginDate!=null and endBeginDate!=null">
+            AND e.createDate BETWEEN #{startBeginDate} AND #{endBeginDate}
+        </if>
+        <if test="start!=null and size!=null">
+            order by e.id limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="getCountByKeywords" resultType="Long">
+        SELECT count(*) FROM t_member e where e.name LIKE concat('%',#{keywords},'%')
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND e.phoneNumber = #{phoneNumber}
+        </if>
+        <if test="startBeginDate!=null and endBeginDate!=null">
+            AND e.createDate BETWEEN #{startBeginDate} AND #{endBeginDate}
+        </if>
+    </select>
+
+    <update id="updateMember">
+        update t_member
+        <set>
+            <if test="member.name != null">
+                name = #{member.name,jdbcType=VARCHAR},
+            </if>
+            <if test="member.sex != null">
+                sex = #{member.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="member.phoneNumber != null">
+                phoneNumber = #{member.phoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="member.telPhoneNumber != null">
+                telPhoneNumber = #{member.telPhoneNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="member.idCardNumber != null">
+                idCardNumber = #{member.idCardNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="member.memberCardNumber != null">
+                memberCardNumber = #{member.memberCardNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="member.remark != null">
+                remark = #{member.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="member.balance != null">
+                balance = #{member.balance,jdbcType=Decimal},
+            </if>
+        </set>
+        where id = #{member.id,jdbcType=BIGINT}
+    </update>
+
+    <insert id="addTransactionRecords" parameterType="org.sang.bean.TransactionRecords">
+            insert into t_transactionRecords (transaction_name,amount,phoneNumber,memberCardNumber,member_id)
+    values (#{transaction_name},#{amount},#{phoneNumber},#{memberCardNumber},#{member_id})
+    </insert>
+
+</mapper>

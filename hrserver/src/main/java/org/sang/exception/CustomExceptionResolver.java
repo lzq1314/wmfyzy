@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by sang on 2018/1/2.
  */
-@Component
+//@Component
 public class CustomExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse response, Object o, Exception e) {
