@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="org.sang.bean.Order">
+        <id column="id" property="id"/>
+        <result column="commodity" property="commodity"/>
+        <result column="member_id" property="member_id"/>
+        <result column="commodity_name" property="commodity_name"/>
+        <result column="commodity_amount" property="commodity_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="memberCardNumber" property="memberCardNumber"/>
+        <result column="commodity_count" property="commodity_count"/>
+    </resultMap>
+
+
+    <insert id="addOrder" parameterType="org.sang.bean.Order">
+            insert into t_orders (commodity,member_id,commodity_name,commodity_amount,commodity_count,phoneNumber,memberCardNumber,member_name)
+    values (#{commodity},#{member_id},#{commodity_name},#{commodity_amount},#{commodity_count},#{phoneNumber},#{memberCardNumber},#{member_name})
+    </insert>
+
+    <select id="getOrderByPhone" resultMap="BaseResultMap">
+        select * from t_orders e where e.phoneNumber = #{phoneNumber} or e.memberCardNumber = #{memberCardNumber}
+    </select>
+
+    <select id="getCountByPhone" resultType="Long">
+           select count(*) from t_orders e where e.phoneNumber = #{phoneNumber} or e.memberCardNumber = #{memberCardNumber}
+    </select>
+    
+    <delete id="deleteOrderBymemberId">
+       DELETE from t_orders where member_id = #{memberId}
+    </delete>
+    
+    <insert id="isrOrderToHistory">
+            insert into t_orders_history select * from t_orders where member_id = #{memberId}
+    </insert>
+</mapper>

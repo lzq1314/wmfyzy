@@ -1,22 +1,5 @@
 package org.sang.controller.member;
 
-import org.sang.HrserverApplication;
-import org.sang.bean.Employee;
-import org.sang.bean.Member;
-import org.sang.bean.Position;
-import org.sang.bean.RespBean;
-import org.sang.common.EmailRunnable;
-import org.sang.common.poi.PoiUtils;
-import org.sang.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.TemplateEngine;
-
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +7,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+
+import org.sang.bean.Member;
+import org.sang.bean.RespBean;
+import org.sang.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by sang on 2018/1/12.
@@ -39,7 +30,12 @@ public class MemberBasicController {
 
     @RequestMapping(value = "/addMember", method = RequestMethod.POST)
     public RespBean addMember(Member member) {
-        if (memberService.addMember(member) == 1) {
+        //现根据手机号查询用户是否存在，若存在则提示用户存在
+    	Member m = memberService.getOneMemberByPhone(member.getPhoneNumber());
+    	if(m.getId() != null) {
+    		return RespBean.error("用户已存在!");
+    	}
+    	if (memberService.addMember(member) == 1) {
             return RespBean.ok("添加成功!");
         }
         return RespBean.error("添加失败!");
@@ -71,9 +67,14 @@ public class MemberBasicController {
         return map;
     }
 
-    @RequestMapping(value = "/updateEmp", method = RequestMethod.PUT)
+    @RequestMapping(value = "/updateMember", method = RequestMethod.PUT)
     public RespBean updateEmp(Member member) {
-        if (memberService.updateMember(member) == 1) {
+    	//现根据手机号查询用户是否存在，若存在则提示用户存在
+    	Member m = memberService.getOneMemberByPhone(member.getPhoneNumber());
+    	if(m.getId() != member.getId()) {
+    		return RespBean.error("更新的用户手机号码已存在!");
+    	}
+    	if (memberService.updateMember(member) == 1) {
             return RespBean.ok("更新成功!");
         }
         return RespBean.error("更新失败!");

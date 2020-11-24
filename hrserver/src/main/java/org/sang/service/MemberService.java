@@ -22,10 +22,6 @@ import java.util.List;
 public class MemberService {
     @Autowired
     MemberMapper memberMapper;
-    /*SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy");
-    SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-    SimpleDateFormat birthdayFormat = new SimpleDateFormat("yyyy-MM-dd");
-    DecimalFormat decimalFormat = new DecimalFormat("##.00");*/
 
     public int addMember(Member member) {
         return memberMapper.addMember(member);
@@ -60,8 +56,10 @@ public class MemberService {
         records.setPhoneNumber(member.getPhoneNumber());
         records.setMemberCardNumber(member.getMemberCardNumber());
         records.setMember_id(member.getId());
-        memberMapper.addTransactionRecords(records);//插入交易记录
-        return memberMapper.updateMember(member);
+        return memberMapper.addTransactionRecords(records);//插入交易记录
     }
 
+    public Member getOneMemberByPhone(String phoneNumber) {
+        return memberMapper.getOneMemberByPhone(phoneNumber);
+    }
 }

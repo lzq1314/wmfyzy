@@ -71,7 +71,7 @@
                 remark = #{member.remark,jdbcType=VARCHAR},
             </if>
             <if test="member.balance != null">
-                balance = #{member.balance,jdbcType=Decimal},
+                balance = #{member.balance,jdbcType=DOUBLE},
             </if>
         </set>
         where id = #{member.id,jdbcType=BIGINT}
@@ -83,7 +83,17 @@
     </insert>
     
     <select id="getOneMemberById" resultMap="BaseResultMap">
-        select * from t_member e where e.id = #{id}
+        select * from t_member e where 
+        1=1
+        <if test="id!=null and id !=''">
+            AND e.id = #{id}
+        </if>
+    </select>
+    
+    <select id="getOneMemberByPhone" resultMap="BaseResultMap">
+        select * from t_member e where 
+        e.phoneNumber = #{phoneNumberOrMemberId}
+        OR e.memberCardNumber = #{phoneNumberOrMemberId}
     </select>
 
 </mapper>

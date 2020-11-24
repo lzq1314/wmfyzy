@@ -28,5 +28,7 @@ public interface MemberMapper {
     int addTransactionRecords(TransactionRecords member);
     
     Member getOneMemberById(@Param("id") Long id);
+    
+    Member getOneMemberByPhone(@Param("phoneNumberOrMemberId") String phoneNumberOrMemberId);
 
 }
