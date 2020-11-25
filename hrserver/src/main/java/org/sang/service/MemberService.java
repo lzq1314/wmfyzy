@@ -52,7 +52,7 @@ public class MemberService {
         
         TransactionRecords records = new TransactionRecords();
         records.setTransaction_name("充值");
-        records.setAmount(balance);
+        records.setAmount(amount.doubleValue());
         records.setPhoneNumber(member.getPhoneNumber());
         records.setMemberCardNumber(member.getMemberCardNumber());
         records.setMember_id(member.getId());
