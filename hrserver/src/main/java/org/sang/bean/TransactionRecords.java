@@ -10,8 +10,19 @@ public class TransactionRecords {
     private String phoneNumber;
     private String memberCardNumber;
     private Long member_id;
+    private String name;
+    
+    
 
-    public Long getId() {
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getId() {
         return id;
     }
 

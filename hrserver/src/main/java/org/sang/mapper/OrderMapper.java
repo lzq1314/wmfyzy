@@ -25,4 +25,13 @@ public interface OrderMapper {
 	int deleteOrderBymemberId(@Param("memberId") Long memberId);
 	
 	int isrOrderToHistory(@Param("memberId") Long memberId);
+	
+	List<Order> getOrderHistoryByPhone(@Param("phoneNumber") String phoneNumber, @Param("memberCardNumber") String memberCardNumber,@Param("start") int start, @Param("size") Integer size);
+
+    Long getOrderHistoryCountByPhone(@Param("phoneNumber") String phoneNumber, @Param("memberCardNumber") String memberCardNumber);
+    
+    List<TransactionRecords> getTransHistoryByPhone(@Param("phoneNumber") String phoneNumber,@Param("start") int start, @Param("size") Integer size);
+
+    Long getTransHistoryCountByPhone(@Param("phoneNumber") String phoneNumber);
+    
 }

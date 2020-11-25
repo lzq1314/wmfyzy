@@ -3,9 +3,11 @@ package org.sang.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.sang.bean.Commodity;
 import org.sang.bean.Member;
 import org.sang.bean.Order;
+import org.sang.bean.TransactionRecords;
 import org.sang.mapper.CommodityMapper;
 import org.sang.mapper.MemberMapper;
 import org.sang.mapper.OrderMapper;
@@ -62,5 +64,23 @@ public class OrderService {
     	orderMapper.isrOrderToHistory(member.getId());
     	orderMapper.deleteOrderBymemberId(member.getId());
     	return memberMapper.updateMember(member);
+    }
+    
+    public List<Order> getOrderHistoryByPhone(String phoneNumber,String memberCardNumber,Integer page, Integer size) {
+    	int start = (page - 1) * size;
+    	return orderMapper.getOrderHistoryByPhone(phoneNumber,memberCardNumber,start,size);
+    }
+
+    public Long getOrderHistoryCountByPhone(String phoneNumber,String memberCardNumber) {
+        return orderMapper.getOrderHistoryCountByPhone(phoneNumber,memberCardNumber);
+    }
+    
+    public List<TransactionRecords> getTransHistoryByPhone(String phoneNumber,Integer page, Integer size) {
+    	int start = (page - 1) * size;
+    	return orderMapper.getTransHistoryByPhone(phoneNumber,start,size);
+    }
+
+    public Long getTransHistoryCountByPhone(String phoneNumber) {
+        return orderMapper.getTransHistoryCountByPhone(phoneNumber);
     }
 }

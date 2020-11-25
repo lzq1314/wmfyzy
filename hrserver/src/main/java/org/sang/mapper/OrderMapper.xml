@@ -14,6 +14,16 @@
         <result column="memberCardNumber" property="memberCardNumber"/>
         <result column="commodity_count" property="commodity_count"/>
     </resultMap>
+	<resultMap id="BaseResultMap1" type="org.sang.bean.TransactionRecords">
+	        <id column="id" property="id"/>
+	        <result column="transaction_name" property="transaction_name"/>
+	        <result column="amount" property="amount"/>
+	        <result column="transaction_time" property="transaction_time"/>
+	        <result column="phoneNumber" property="phoneNumber"/>
+	        <result column="memberCardNumber" property="memberCardNumber"/>
+	        <result column="member_id" property="member_id"/>
+	        <result column="name" property="name"/>
+	    </resultMap>
 
 
     <insert id="addOrder" parameterType="org.sang.bean.Order">
@@ -36,4 +46,38 @@
     <insert id="isrOrderToHistory">
             insert into t_orders_history select * from t_orders where member_id = #{memberId}
     </insert>
+    
+    <select id="getOrderHistoryByPhone" resultMap="BaseResultMap">
+        select * from t_orders_history e where 1=1
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND  e.phoneNumber = #{phoneNumber}
+        </if>
+        order by e.member_name,e.create_time desc limit #{start},#{size}
+        
+    </select>
+    
+    <select id="getOrderHistoryCountByPhone" resultType="Long">
+           select count(*) from t_orders_history e where 1=1
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND  e.phoneNumber = #{phoneNumber}
+        </if>
+    </select>
+    
+    
+     <select id="getTransHistoryByPhone" resultMap="BaseResultMap1">
+       select t.* from ( select trans.*,mem.name from t_transactionrecords trans left join t_member mem on trans.member_id = mem.id
+        Where 1=1 
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND  trans.phoneNumber = #{phoneNumber}
+        </if>) t
+        order by t.name,t.transaction_time desc limit #{start},#{size}
+        
+    </select>
+    
+    <select id="getTransHistoryCountByPhone" resultType="Long">
+           select count(*) from t_orders_history e where 1=1
+        <if test="phoneNumber!=null and phoneNumber !=''">
+            AND  e.phoneNumber = #{phoneNumber}
+        </if>
+    </select>
 </mapper>

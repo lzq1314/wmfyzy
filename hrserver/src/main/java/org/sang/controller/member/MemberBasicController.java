@@ -32,7 +32,7 @@ public class MemberBasicController {
     public RespBean addMember(Member member) {
         //现根据手机号查询用户是否存在，若存在则提示用户存在
     	Member m = memberService.getOneMemberByPhone(member.getPhoneNumber());
-    	if(m.getId() != null) {
+    	if(m != null) {
     		return RespBean.error("用户已存在!");
     	}
     	if (memberService.addMember(member) == 1) {

@@ -17,11 +17,16 @@ CREATE TABLE `t_member` (
 INSERT INTO `menu` VALUES ('29', '/', '/home', 'Home', '会员中心', 'fa fa-user-circle-o', null, '1', '1', '1');
 INSERT INTO `menu` VALUES ('30', '/member/basic/**', '/member/basic', 'MemberBasic', '会员基本信息', null, null, '1', '29', '1');
 INSERT INTO `menu` VALUES ('31', '/shopping/basic/**', '/shopping/basic', 'ShoppingBasic', '会员购物车', null, null, '1', '29', '1');
+INSERT INTO `menu` VALUES ('32', '/historyShopping/basic/**', '/historyShopping/basic', 'HistoryShoppingBasic', '消费记录', null, null, '1', '29', '1');
+INSERT INTO `menu` VALUES ('33', '/rechargeHistory/basic/**', '/rechargeHistory/basic', 'RechargeHistoryBasic', '充值记录', null, null, '1', '29', '1');
+
 
 
 INSERT INTO `menu_role` VALUES ('278', '29', '6');
 INSERT INTO `menu_role` VALUES ('279', '30', '6');
 INSERT INTO `menu_role` VALUES ('280', '31', '6');
+INSERT INTO `menu_role` VALUES ('281', '32', '6');
+INSERT INTO `menu_role` VALUES ('282', '33', '6');
 
 DROP TABLE IF EXISTS `t_transactionRecords`;
 CREATE TABLE `t_transactionRecords` (

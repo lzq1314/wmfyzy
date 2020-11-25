@@ -19,12 +19,15 @@
     </select>
     
     <select id="getOrdersCommodityByMemberId" resultType="map">
-        SELECT
-			c.*, sum(o.commodity_count) cnt
-		FROM
-			t_commodity c
-		LEFT JOIN t_orders o ON c.id = o.commodity
-		AND o.member_id = #{memberId}
+        select t.id,t.commodity_name,t.commodity_amount,t.create_time,t.commodity_status,SUM(t.count) cnt from (
+			SELECT
+						c.*,IFNULL(o.commodity_count,0) count
+					FROM
+						t_commodity c
+					LEFT JOIN t_orders o ON o.commodity = c.id
+			AND c.commodity_status ='0' 
+			AND o.member_id = #{memberId}
+			) t group by t.id,t.commodity_name,t.commodity_amount,t.create_time,t.commodity_status
     </select>
 
 </mapper>
